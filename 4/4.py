@@ -9,7 +9,7 @@ def decrypt(ct, num):
 	res = ""
 	for c in ct:
 		if c == "-":
-			res += "-"
+			res += " "
 		else:
 			res += chr(((ord(c) - 97 + num) % 26) + 97)
 	return res
@@ -31,22 +31,22 @@ def checksum(name):
 def part1():
 	idsum = 0
 	for rl in open("in4.txt"):
-		rm = re.match("(.*)-(\d+)\[(.*)\]", rl)
-		name, idnum, cs = rm.group(1), int(rm.group(2)), rm.group(3)
-	
+		name, idnum, cs = re.match("([a-z-]+)-(\d+)\[([a-z]{5})\]", rl).groups()
+		idnum = int(idnum)
+
 		if cs == checksum(name):
 			idsum += idnum
 	print("sum:", idsum)
-	
+
 
 def part2():
 	for rl in open("in4.txt"):
-		rm = re.match("(.*)-(\d+)\[(.*)\]", rl)
-		name, idnum, cs = rm.group(1), int(rm.group(2)), rm.group(3)
-	
+		name, idnum, cs = re.match("([a-z-]+)-(\d+)\[([a-z]{5})\]", rl).groups()
+		idnum = int(idnum)
+
 		if cs == checksum(name):
 			dname = decrypt(name, idnum)
-			if "pole" in dname:
+			if dname.startswith("northpole"):
 				print(dname, idnum)
 
 
