@@ -1,0 +1,2 @@
+I actually solved day 11 on a piece of paper.
+Might be worth writing code for bigger inputs, but this can be figured out by hand.
