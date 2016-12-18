@@ -2,42 +2,26 @@
 
 import re
 
-rounds = 40
+rounds = 40 #part 1
+#rounds = 400000 #part 2
 
 def main():
 	inp = open("in18.txt").read()[:-1]
-	#inp = "..^^."
 
-	rlen = len(inp)
-	rows = inp
+	rlen = len(inp) + 1
+	row = inp
 	res = inp.count(".")
+	row = "." + row + "." # pad with "." to get rid of boundary checks
 
-	for row in range(rounds-1):
-		newrow = ""
-		for idx in range(rlen):
-			if idx == 0:
-				check = "." != rows[1]
-			elif idx == rlen -1:
-				check = rows[idx-1] != "."
-			else:
-				check = rows[idx-1] != rows[idx+1]
-
-			if check:
-				newrow += "^"
-			else:
-				res +=1
-				newrow += "."
-
-		rows = newrow
+	for _ in range(rounds - 1):
+		newrow = "."
+		for idx in range(1, rlen): # rlen is inputlen + 1
+			newrow += "^" if row[idx-1] != row[idx+1] else "."
+		res += newrow.count(".") - 1 # this is faster than +1 for every non-trap idx
+		row = newrow + "." # padding
 
 	print(res)
-
-def tt():
-	s = "^^."
-	rm = re.match(r"(.)\1(?!\1).|(.)((?!\2).)\3", s)
-	print(rm)
 
 
 if __name__ == '__main__':
 	main()
-	#tt()
